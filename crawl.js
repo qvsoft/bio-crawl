@@ -1,3 +1,8 @@
+/*
+Fcuking stupid code to crawl products from bio sites, but - it works ;))
+*/
+
+// Download json file
 var fileSave = function(data, filename) {
   if (!data) {
     console.error('Console.save: No data')
@@ -25,6 +30,7 @@ var fileSave = function(data, filename) {
 
 var curUrl = window.location.href;
 
+// Get site name to create downloaded file name, more friendly for user
 var getSiteName = function() {
   let siteName = "";
 
@@ -49,7 +55,7 @@ jQuery(document).ready(function() {
 
   if (curUrl.includes("beacons.ai")) {
     prependArea = "#root .PageFrame";
-    //Delay in pages
+    //Delay in pages, beacons need delay in multi pages
     setTimeout(function() {
       $("[aria-label='links block link buttons'] > a").each(function(i) {
         let product = {};
@@ -111,18 +117,20 @@ jQuery(document).ready(function() {
       products.push(product);
     });
   } else {
+    // Other sites to be updated
     siteSupported = false;
   }
 
   setTimeout(function() {
     console.clear();
     if (!siteSupported) {
-      console.log("This site is not supported. Please contact PP team.");
+      console.log("This site is not supported. Please contact Passio Page team.");
     }
 
-    //console.log('Danh sach lien ket');
+    //console.log('Link list');
     //console.log(JSON.stringify({"products": products}));
 
+    // Add download button to top of site
     if (prependArea) {
       let download_area = $("<div style='position: fixed;top: 10px;left: 10px;display: flex;flex-direction: column;place-items: flex-start;grid-gap: 4px;z-index: 999;'><div id='download-product-file' style='background: #007ccf;padding: 8px;border: 2px solid #e5e5e5;border-radius: 8px;cursor: pointer;color: #fff;'>🗎 Download Product File</div></div>");
       download_area.find("#download-product-file").on("click", function() {
